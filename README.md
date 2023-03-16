@@ -4,6 +4,7 @@ Esse projeto foi elaborado [nesse vídeo]() e explora o conceito de injeção de
 
 ## Roteiro
 - [] Projeto de migração de usuários
+- [] Uso de abstrações
 - [] Adiciona injeção de dependências
 - [] Adiciona o Spring
 
