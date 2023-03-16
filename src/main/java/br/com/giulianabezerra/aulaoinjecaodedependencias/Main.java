@@ -2,17 +2,28 @@ package br.com.giulianabezerra.aulaoinjecaodedependencias;
 
 import java.util.List;
 
+import org.springframework.boot.ApplicationRunner;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Bean;
+import org.springframework.stereotype.Component;
+
+@SpringBootApplication
 public class Main {
   public static void main(String[] args) {
-    new MigracaoUsuario(
-        new FileReader(),
-        new BdWriter()).migrar();
+    SpringApplication.run(Main.class, args);
+  }
+
+  @Bean
+  ApplicationRunner runner(MigracaoUsuario migracaoUsuario) {
+    return args -> migracaoUsuario.migrar();
   }
 }
 
 record User(String email, String username, String password) {
 }
 
+@Component
 class MigracaoUsuario {
   Reader<User> reader;
   Writer<User> writer;
@@ -38,6 +49,7 @@ interface Writer<T> {
   void write(List<T> itens);
 }
 
+@Component
 class FileReader implements Reader<User> {
   public List<User> read() {
     System.out.println("Lendo usuários de arquivo...");
@@ -45,6 +57,7 @@ class FileReader implements Reader<User> {
   }
 }
 
+@Component
 class BdWriter implements Writer<User> {
   public void write(List<User> users) {
     System.out.println("Escrevendo usuários no banco...");
