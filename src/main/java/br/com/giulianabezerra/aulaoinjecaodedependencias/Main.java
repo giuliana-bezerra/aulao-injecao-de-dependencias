@@ -4,7 +4,9 @@ import java.util.List;
 
 public class Main {
   public static void main(String[] args) {
-    new MigracaoUsuario().migrar();
+    new MigracaoUsuario(
+        new FileReader(),
+        new BdWriter()).migrar();
   }
 }
 
@@ -12,8 +14,13 @@ record User(String email, String username, String password) {
 }
 
 class MigracaoUsuario {
-  Reader<User> reader = new FileReader();
-  Writer<User> writer = new BdWriter();
+  Reader<User> reader;
+  Writer<User> writer;
+
+  public MigracaoUsuario(Reader<User> reader, Writer<User> writer) {
+    this.reader = reader;
+    this.writer = writer;
+  }
 
   public void migrar() {
     // Ler dados em A
